@@ -6,7 +6,7 @@ properties([
         string(name: 'Major Version', defaultValue: '0'),
 		string(name: 'Minor Version', defaultValue: '0'),
 		string(name: 'Patch Version', defaultValue: '0')
-            ])
+         ])
        ])
 
 pipeline {
@@ -16,6 +16,9 @@ pipeline {
         SonarPassword = "test"
         tags_extra = "test"
     }
+	options { buildDiscarder(logRotator(numToKeepStr: '15'))
+              disableConcurrentBuilds()	
+	       }
     stages {
         stage('Code Clean/lint') {
             steps {

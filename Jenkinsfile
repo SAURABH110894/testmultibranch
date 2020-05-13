@@ -1,27 +1,68 @@
+// Jenkinsfile for Java/Spring Application 
 
-pipeline { 
+
+properties([
+  parameters([
+        string(name: 'Major Version', defaultValue: '0'),
+		string(name: 'Minor Version', defaultValue: '0'),
+		string(name: 'Patch Version', defaultValue: '0')
+            ])
+       ])
+
+pipeline {
     agent any
+    environment {
+        SonarLogin = "test"
+        SonarPassword = "test"
+        tags_extra = "test"
+    }
     stages {
-
-        stage('PRE-BUILD') {
+        stage('Code Clean/lint') {
             steps {
-                echo 'Reading Version from Package.json'
-              
-              }
-           }
-
-	stage('NPM INSTALL') {
+                echo "tags_extra: ${tags_extra}"
+            }
+        }
+        stage('Compile') {
             steps {
-                echo '**************** START - NPM INSTALL pipeline ****************'
-                echo '**************** END - NPM INSTALL pipeline ****************'
-                }
-        } 
-
-	stage('Ansible Deployment') {
+                echo "tags_extra: ${tags_extra}"
+            }
+        }
+        stage('Test') {
             steps {
-                echo '**************** START - Ansible Deployment pipeline ****************'
-                echo '**************** END - Ansible Deployment pipeline ****************'
-                }
-        }  
+                echo "tags_extra: ${tags_extra}"
+            }
+        }
+        stage('Code Coverage') {
+            steps {
+                echo "tags_extra: ${tags_extra}"
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                echo "tags_extra: ${tags_extra}"
+            }
+        }
+        stage('Publish to Nexus') {
+            steps {
+                echo "tags_extra: ${tags_extra}"
+            }
+        }
+        stage('Docker Push Image') {
+            steps {
+                echo "tags_extra: ${tags_extra}"
+            }
+        }
+    }
+    post {
+
+        always {
+            echo 'One way or another, I have finished'
+          }
+        success {
+            echo 'I succeeeded!'
+        }
+        failure {
+            echo 'I failed :('
+        }
     }
 }
